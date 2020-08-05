@@ -13,10 +13,9 @@ class Story extends Component {
   }
 }
 
-// Instead of taking everything from state, we just want the user info.
+
 const mapStateToProps = ( state ) => ({
   state
 });
 
-// this allows us to use <App /> in index.js
 export default connect( mapStateToProps )( Story );

@@ -7,11 +7,12 @@ class UserInput extends Component {
   render() {
     return (
       <>
-        <input type="text" className="userInputBox" placeholder="here is where the user types" />
+        <input type="text" className="userInputBox" placeholder="here is the user input" />
       </>
     );
   }
 }
+
 
 const mapStateToProps = ( state ) => ({
   state
