@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import Story from '../Story/Story';
-import UserInput from '../UserInput/UserInput';
+import  '../Story/Story.css';
 
-class Main extends Component {
+class Story extends Component {
   
   render() {
     return (
       <>
-        <LogOutButton />
-        <Story />
-        <UserInput />
+        <div className="storyBox">Here is the story</div>
       </>
     );
   }
@@ -23,4 +19,4 @@ const mapStateToProps = ( state ) => ({
 });
 
 // this allows us to use <App /> in index.js
-export default connect( mapStateToProps )( Main );
+export default connect( mapStateToProps )( Story );
