@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Senario from '../Senario/Senario';
 import  '../Story/Story.css';
 
 class Story extends Component {
@@ -48,7 +47,13 @@ class Story extends Component {
     
     updateSenario = () => {
       // get the senario next in line
-      let nextSenario = this.props.reduxState.senarioList[ this.state.senarioCount ];
+      // but beware we run out of senarios!
+      if ( this.props.reduxState.senarioList.length < this.state.senarioCount + 1 ) {
+        console.warn( 'ran out of senarios!' );
+        return '';
+      }
+
+      let nextSenario = this.props.reduxState.senarioList[ this.state.senarioCount ].senario;
 
       // put this is a var - not really a shallow copy, right? but wtvr
       let stateSenarioList = this.state.senarioSoFar;
