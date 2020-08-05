@@ -11,9 +11,10 @@ CREATE TABLE "closet" (
 
 CREATE TABLE "clothing_item" (
     "id" SERIAL PRIMARY KEY,
-    "description" character varying(50) NOT NULL,
+    "description" VARCHAR(50),
     "type" integer,
-    "wearing" bit(1) DEFAULT '0'::"bit"
+    "wearing" bit(1) DEFAULT '0'::"bit",
+    "join" integer REFERENCES clothing_join(id)
 );
 
 CREATE TABLE "clothing_join" (
@@ -68,8 +69,29 @@ CREATE TABLE "user" (
 );
 
 
+INSERT INTO closet ("clothing_item")
+				VALUES	(4), (5), (6);
 
 
+INSERT INTO "clothing_item" ("description", "type", "wearing", "join")
+					 VALUES  ('bowie',		1, 		true,		13),
+					 		 ('cool',		2, 		true,		21),
+					 		 ('oh no',		2, 		false,		24);
+
+INSERT INTO "clothing_join" ("shirt", "pant")
+		VALUES 
+				(1, NULL),
+				(2, NULL),
+				(3, NULL),
+				(4, NULL),
+				(5, NULL),
+				(6, NULL),
+				(NULL, 1),
+				(NULL, 2),
+				(NULL, 3),
+				(NULL, 4),
+				(NULL, 5),
+				(NULL, 6);
 
 INSERT INTO shirt 	("fit", 		"color", 					"neck", 		"sleeveLength")
 VALUES 				('loose', 		'grey', 					'scoop neck', 	'cap sleeve'), 
