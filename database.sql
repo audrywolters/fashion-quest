@@ -3,24 +3,45 @@
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL,
-    "closet" integer REFERENCES closet(id),
-    "storyState" integer REFERENCES story(id)
-);
 
 CREATE TABLE "closet" (
 	"id" SERIAL PRIMARY KEY,	
 	"clothingItem" int
 );
 
+CREATE TABLE "clothing_item" (
+    "id" SERIAL PRIMARY KEY,
+    "description" character varying(50) NOT NULL,
+    "type" integer,
+    "wearing" bit(1) DEFAULT '0'::"bit"
+);
+
+CREATE TABLE "clothing_join" (
+    "id" SERIAL PRIMARY KEY,
+    "shirt" integer REFERENCES shirt(id),
+    "pant" integer REFERENCES pant(id)
+);
+
+CREATE TABLE "outfit" (
+    "id" SERIAL PRIMARY KEY,
+    "shirt" integer REFERENCES shirt(id),
+    "pant" integer REFERENCES pant(id)
+);
+
+CREATE TABLE "pant" (
+    "id" SERIAL PRIMARY KEY,
+    "clothingType" integer DEFAULT 2,
+    "icon" VARCHAR (1000) DEFAULT '| |',
+    "fit" VARCHAR (50) NOT NULL,
+    "color" VARCHAR (50) NOT NULL,
+    "cut" VARCHAR (50) NOT NULL,
+    "legLength" VARCHAR (50) NOT NULL
+);
+
 CREATE TABLE "story" (
     "id" SERIAL PRIMARY KEY,
     "senario" VARCHAR (1000) NOT NULL
 );
-
 
 CREATE TABLE "shirt" (
     "id" SERIAL PRIMARY KEY,
@@ -32,15 +53,18 @@ CREATE TABLE "shirt" (
     "sleeveLength" VARCHAR (50) NOT NULL
 );
 
-
-CREATE TABLE "pant" (
+CREATE TABLE "story" (
     "id" SERIAL PRIMARY KEY,
-    "clothingType" integer DEFAULT 2,
-    "icon" VARCHAR (1000) DEFAULT '| |',
-    "fit" VARCHAR (50) NOT NULL,
-    "color" VARCHAR (50) NOT NULL,
-    "cut" VARCHAR (50) NOT NULL,
-    "legLength" VARCHAR (50) NOT NULL
+    "senario" VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE "user" (
+    "id" SERIAL PRIMARY KEY,
+    "username" VARCHAR(80) NOT NULL UNIQUE,
+    "password" VARCHAR(1000) NOT NULL,
+    "closet" integer REFERENCES closet(id),
+    "storyState" integer REFERENCES story(id),
+    "outfit" integer REFERENCES outfit(id)
 );
 
 
