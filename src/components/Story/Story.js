@@ -93,11 +93,14 @@ class Story extends Component {
       // let's shallow copy this
       let stateWhatsHappening = this.state.whatsHappening;
 
+
       // yay new div w newly entered text
       let o = this.props.reduxState.outfit;
+      let display = '';
 
-      // format the pretty pretty clothes
-      let display = o.icon + ' ~~~ ' + o.color + o.cut + o.fit + o.legLength + o.neck + o.sleeveLength;
+      for ( let i of o ) {
+        display += `${ i.icon } | color: ${ i.color } fit: ${ i.fit } 1: ${ i.featureA } 2: ${ i.featureB }`
+      }
 
       let key =  Math.random().toString(36).substr( 2, 20 );
       let newOutfitDiv = <div key={ key }>{ display }</div>;
@@ -119,10 +122,11 @@ class Story extends Component {
 
       // yay new div w newly entered text
       let c = this.props.reduxState.closet;
+      let display = '';
 
-      // format the pretty pretty clothes
-      let display = '!!! closet !!!';//o.icon + ' ~~~ ' + o.color + o.cut + o.fit + o.legLength + o.neck + o.sleeveLength;
-
+      for ( let i of c ) {
+        display += `${ i.icon } | color: ${ i.color } fit: ${ i.fit } 1: ${ i.featureA } 2: ${ i.featureB }`
+      }
       let key =  Math.random().toString(36).substr( 2, 20 );
       let newClosetDiv = <div key={ key }>{ display }</div>;
 
