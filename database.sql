@@ -1,8 +1,10 @@
-
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
+SELECT  s."clothingType", s.color, s.fit, s.icon, s.neck, s."sleeveLength",
+	    p."clothingType", p.color, p.fit, p.icon, p.cut,  p."legLength"
+FROM 	"user" as u
+JOIN 	outfit as o on o.id       = u.outfit
+JOIN 	shirt  as s on o.shirt_id = s.id
+JOIN 	pant   as p on o.pant_id  = p.id
+WHERE 	u.id = 1;
 
 CREATE TABLE "closet" (
 	"id" SERIAL PRIMARY KEY,	
@@ -23,10 +25,10 @@ CREATE TABLE "clothing_join" (
     "pant" integer REFERENCES pant(id)
 );
 
-CREATE TABLE "outfit" (
+CREATE TABLE outfit (
     "id" SERIAL PRIMARY KEY,
-    "shirt" integer REFERENCES shirt(id),
-    "pant" integer REFERENCES pant(id)
+    "shirt_id" integer REFERENCES shirt(id),
+    "pant_id" integer REFERENCES pant(id)
 );
 
 CREATE TABLE "pant" (
@@ -63,20 +65,21 @@ CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR(80) NOT NULL UNIQUE,
     "password" VARCHAR(1000) NOT NULL,
-    "closet" integer REFERENCES closet(id),
+    "closet" integer,
     "storyState" integer REFERENCES story(id),
     "outfit" integer REFERENCES outfit(id)
 );
 
+INSERT INTO closet 	("closet_id","clothing_item",	"wearing")
+		    VALUES 	(1,			4, 			  		true), 
+		    		(1, 		5, 					true), 
+		    		(1, 		6, 					false);
 
-INSERT INTO closet ("clothing_item")
-				VALUES	(4), (5), (6);
 
-
-INSERT INTO "clothing_item" ("description", "type", "wearing", "join")
-					 VALUES  ('bowie',		1, 		true,		13),
-					 		 ('cool',		2, 		true,		21),
-					 		 ('oh no',		2, 		false,		24);
+INSERT INTO "clothing_item" ("description", "type", "join")
+					 VALUES  ('bowie',		1,		13),
+					 		 ('cool',		2,		21),
+					 		 ('oh no',		2,		24);
 
 INSERT INTO "clothing_join" ("shirt", "pant")
 		VALUES 

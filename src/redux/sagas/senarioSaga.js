@@ -3,9 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchSenario() {
   try {
-
     const response = yield axios.get('/api/senario');
-
     yield put({ type: 'SET_SENARIO', payload: response.data });
 
   } catch (error) {
