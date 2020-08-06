@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import closet from './closetReducer';
 import errors from './errorsReducer';
 import input from './inputReducer';
 import loginMode from './loginModeReducer';
@@ -13,6 +14,7 @@ import user from './userReducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
+  closet,
   errors, // contains registrationMessage and loginMessage
   input,
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
