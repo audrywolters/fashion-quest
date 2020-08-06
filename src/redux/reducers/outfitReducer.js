@@ -1,4 +1,4 @@
-const outfitReducer = ( state = {}, action ) => {
+const outfitReducer = ( state = [], action ) => {
     switch ( action.type ) {
         case 'SET_OUTFIT':
             return action.payload;

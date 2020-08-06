@@ -5,26 +5,16 @@ const router = express.Router();
 // get the current user's current outfit
 router.get('/', (req, res) => {
 
-    // AUDRY - i forgot how to send stuff through req.body
-    // const {
-    //     userID
-    // } = req.user.id;
-
-    // AUDRY - this query is inncorrecct
-    const queryText = `SELECT   s."clothingType", s.color, s.fit, s.icon, s.neck, s."sleeveLength",
-                                p."clothingType", p.color, p.fit, p.icon, p.cut,  p."legLength"
-                        FROM 	"user" as u
-                        JOIN 	outfit as o on o.id       = u.outfit
-                        JOIN 	shirt  as s on o.shirt_id = s.id
-                        JOIN 	pant   as p on o.pant_id  = p.id
-                        WHERE 	u.id = $1;`
+    const queryText = `SELECT i.type, i.icon, i.fit, i.color, i."featureA", i."featureB"
+                        FROM clothing_item as i
+                        JOIN outfit as o on o.clothing_item = i.id
+                        JOIN "user" as u on u.outfit = o.outfit_id
+                        WHERE u.id = $1;`
 
     pool.query( queryText, [ req.user.id ] )
                 
             .then( ( result ) => { 
-                // AUDRY - this will hopefully return mulit rows
-                // why did i do this
-                res.send( result.rows[0] ) 
+                res.send( result.rows ) 
             })
             .catch( ( error ) => {
                 console.log( 'Error GET details', error )

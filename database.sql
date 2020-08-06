@@ -76,11 +76,6 @@ INSERT INTO closet 	("closet_id","clothing_item",	"wearing")
 		    		(1, 		6, 					false);
 
 
-INSERT INTO "clothing_item" ("description", "type", "join")
-					 VALUES  ('bowie',		1,		13),
-					 		 ('cool',		2,		21),
-					 		 ('oh no',		2,		24);
-
 INSERT INTO "clothing_join" ("shirt", "pant")
 		VALUES 
 				(1, NULL),
@@ -95,23 +90,31 @@ INSERT INTO "clothing_join" ("shirt", "pant")
 				(NULL, 4),
 				(NULL, 5),
 				(NULL, 6);
+				
+CREATE TABLE "clothing_item" (
+    "id" SERIAL PRIMARY KEY,
+    "type" int,
+    "icon" VARCHAR(50),
+    "fit" VARCHAR(50),
+    "color" VARCHAR(50),
+    "featureA" VARCHAR(50),
+    "featureB" VARCHAR(50)
+);
 
-INSERT INTO shirt 	("fit", 		"color", 					"neck", 		"sleeveLength")
-VALUES 				('loose', 		'grey', 					'scoop neck', 	'cap sleeve'), 
-	 				('tight', 		'black', 					'turtleneck', 	'long'), 
-	 				('baggy', 		'white', 					'cardigan', 	'knuckles'), 
-	 				('fitted', 		'orange pattern', 			'peterpan', 	'sleevless'), 
-	 				('fitted', 		'white', 					'button up', 	'short'), 
-	 				('normals', 	'grey', 					'ring', 		'short');
-	 				
-INSERT INTO pant 	("fit", 		"color", 					"cut", 			"legLength")
-VALUES 				('tight', 		'jeans', 					'slim', 		'heel'), 
-	 				('normals', 	'red with white stripe', 	'70s', 			'thigh'), 
-	 				('fitted', 		'darkwash jeans', 			'slim', 		'heel'), 
-	 				('loose', 		'purple', 					'bellbottoms', 	'ankle'), 
-	 				('sad tight', 	'black', 					'slacks', 		'high rise'), 
-	 				('saggy', 		'acid wash jeans', 			'bootcut', 		'heel');
-		
+INSERT INTO clothing_item 	("type",		"icon",			"fit", 			"color", 					"featureA", 	"featureB")
+VALUES 						(1,				'shirt',		'loose', 		'grey', 					'scoop neck', 	'cap sleeve'), 
+			 				(1,				'shirt',		'tight', 		'black', 					'turtleneck', 	'long'), 
+			 				(1,				'shirt',		'baggy', 		'white', 					'cardigan', 	'knuckles'), 
+			 				(1,				'shirt',		'fitted', 		'orange pattern', 			'peterpan', 	'sleevless'), 
+			 				(1,				'shirt',		'fitted', 		'white', 					'button up', 	'short'), 
+			 				(1,				'shirt',		'normals', 		'grey', 					'ring', 		'short'),
+			 				(2,				'| )( |',		'tight', 		'jeans', 					'slim', 		'heel'), 
+			 				(2,				'| )( |',		'normals', 		'red with white stripe', 	'70s', 			'thigh'), 
+			 				(2,				'| )( |',		'fitted', 		'darkwash jeans', 			'slim', 		'heel'), 
+			 				(2,				'| )( |',		'loose', 		'purple', 					'bellbottoms', 	'ankle'), 
+			 				(2,				'| )( |',		'sad tight', 	'black', 					'slacks', 		'high rise'), 
+			 				(2,				'| )( |',		'saggy', 		'acid wash jeans', 			'bootcut', 		'heel');
+
 INSERT INTO story ("senario")
 VALUES 	('steve says hi'), 
 		('lets go do stuff'), 
