@@ -26,7 +26,6 @@ class Story extends Component {
 
       // store all the story items
       this.props.dispatch({ type: 'FETCH_SENARIO' });
-
     }
     
     // AUDRY - issue, if you type the same thing in a row, "k"
@@ -34,51 +33,30 @@ class Story extends Component {
     componentDidUpdate( prevProps ) {
 
       // catch when new input is entered
-      if ( prevProps.reduxState.input !== this.props.reduxState.input
-          // AUDRY - this is bad!
-          // || this.props.reduxState.input === 'k' 
-          ) {
+      if ( prevProps.reduxState.input !== this.props.reduxState.input ) {
 
-        console.log('comp did update. redux input changed')
-        // AUDRY - maybe for shuffle, we can decide what happens here
-        // aka whatShallHappen(userInput) -->?
-        //this.updateUserInput();
-
-        // how will we respond to the user?
-        // what should we print next?
+        // how will we respond to the user
         this.whatShallHappenNext( this.props.reduxState.input );
       }
     }
 
-    // when user types something
-    // user typed will displayed
-    // then the next thing will be triggered to display
-      // be it outfit
-      // or story
-
     updateUserInput = () => {
 
-      console.log('START update user input' );
       // inputs are created on the fly, so collect as we go along
       let nextUserInput = this.props.reduxState.input;
 
-      // put this is a var - not really a shallow copy, right? but wtvr
-      // let stateUserInputList = this.state.userInputSoFar;
-
+      // shallow copy
       let stateWhatsHappening = this.state.whatsHappening;
 
       // yay new div w newly entered text
-      let uniqueKey = `${ this.state.userInputCount } ${nextUserInput}`;
-      let newUserInputDiv = <div key={ uniqueKey }>--{ nextUserInput }</div>;
+      let key = Math.random().toString(36).substr( 2, 20 );
+      let newUserInputDiv = <div key={ key }>--{ nextUserInput }</div>;
 
       let coolArray = stateWhatsHappening.concat( newUserInputDiv );
 
       // set for later!
       this.setState({
-        // userInputSoFar: stateUserInputList.concat( newUserInputDiv ),
-        userInputCount: this.state.userInputCount + 1,
-        whatsHappening: coolArray,
-        //whatsCount: this.state.whatsCount + 1
+        whatsHappening: coolArray
       });
 
       console.log('END update user input' );
@@ -100,9 +78,9 @@ class Story extends Component {
       // let's shallow copy this
       let stateWhatsHappening = this.state.whatsHappening;
 
-      // yay new div w newly entered text
-      let uniqueKey = `${ this.state.senarioCount } ${nextSenario}`;
-      let newSenarioDiv = <div key={ uniqueKey }>{ nextSenario }</div>;
+      // yay new div w newly entered text;
+      let key = Math.random().toString(36).substr( 2, 20 );
+      let newSenarioDiv = <div key={ key }>{ nextSenario }</div>;
 
       // set for later!
       this.setState({
@@ -111,12 +89,37 @@ class Story extends Component {
       });
     }
 
+    getOutfit = () => {
+      // ask saga to help us do it
+
+      // AUDRY - async!
+      this.props.dispatch({ type: 'FETCH_OUTFIT', payload: this.state.userID });
+
+      // let's shallow copy this
+      let stateWhatsHappening = this.state.whatsHappening;
+
+      // yay new div w newly entered text
+      let o = this.props.reduxState.outfit;
+
+      // format the pretty pretty clothes
+      let display = o.icon + ' ~~~ ' + o.color + o.cut + o.fit + o.legLength + o.neck + o.sleeveLength;
+
+      let key =  Math.random().toString(36).substr( 2, 20 );
+      let newOutfitDiv = <div key={ key }>{ display }</div>;
+
+      // set for later!
+      this.setState({
+        whatsHappening: stateWhatsHappening.concat( newOutfitDiv )
+      });
+    }
+
     whatShallHappenNext = ( input ) => {
 
       this.updateUserInput();
 
       if ( input === 'outfit' ) {
-        return this.getOutfit(); 
+        this.getOutfit();
+        return;
       }
 
       if ( input === 'k' ) {
@@ -125,19 +128,9 @@ class Story extends Component {
       }
     }
 
-    getOutfit = () => {
-      // ask saga to help us do it
-      this.props.dispatch({ type: 'FETCH_OUTFIT', payload: this.state.userID });
-    }
-    
     render() {    
         return (
-            <div className="storyBox">
-                {/* we've got to tangle these out */}
-                <div>{ this.state.whatsHappening }</div>
-                {/* <div>{ this.state.senarioSoFar }</div>
-                <div>{ this.state.userInputSoFar }</div> */}
-            </div>
+            <div className="storyBox"> { this.state.whatsHappening } </div>
         );
     }
 }
