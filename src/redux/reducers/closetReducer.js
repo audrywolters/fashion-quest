@@ -1,10 +1,10 @@
-const outfitReducer = ( state = [], action ) => {
+const closetReducer = ( state = [], action ) => {
     switch ( action.type ) {
-        case 'SET_OUTFIT':
+        case 'SET_CLOSET':
             return action.payload;
         default:
             return state;
     }
 };
 
-export default outfitReducer;
+export default closetReducer;

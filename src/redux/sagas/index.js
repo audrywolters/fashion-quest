@@ -1,10 +1,11 @@
 import { all } from 'redux-saga/effects';
+import closetSaga from './closetSaga';
 import inputSaga from './inputSaga';
 import loginSaga from './loginSaga';
+import outfitSaga from './outfitSaga';
 import registrationSaga from './registrationSaga';
 import senarioSaga from './senarioSaga';
 import userSaga from './userSaga';
-import outfitSaga from './outfitSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -15,6 +16,7 @@ import outfitSaga from './outfitSaga';
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
+    closetSaga(),
     inputSaga(),
     loginSaga(),
     outfitSaga(),
