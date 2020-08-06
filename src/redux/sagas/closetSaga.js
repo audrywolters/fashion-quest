@@ -8,6 +8,8 @@ function* fetchCloset( action ) {
 
     yield put({ type: 'SET_CLOSET', payload: response.data });
     
+    console.log(response);
+    
   } catch (error) {
     console.log('Closet get request failed', error);
   }

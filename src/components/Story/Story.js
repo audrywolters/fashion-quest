@@ -127,6 +127,7 @@ class Story extends Component {
       for ( let i of c ) {
         display += `${ i.icon } | color: ${ i.color } fit: ${ i.fit } 1: ${ i.featureA } 2: ${ i.featureB }`
       }
+      
       let key =  Math.random().toString(36).substr( 2, 20 );
       let newClosetDiv = <div key={ key }>{ display }</div>;
 
