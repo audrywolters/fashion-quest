@@ -151,10 +151,10 @@ class Story extends Component {
       const wearing = ourType.filter( cloth => cloth.wearing );
       const choices = ourType.filter( cloth => !cloth.wearing );
 
-      this.printChange( wearing, choices );
+      this.printChangeChoice( wearing, choices );
     }
 
-    printChange = ( wearing, choices ) => {
+    printChangeChoice = ( wearing, choices ) => {
 
       let w = {};
       if ( wearing.length === 1 ) {
@@ -168,14 +168,21 @@ class Story extends Component {
       for ( let i of choices ) {
         changeTo += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
-      changeTo += '\n\n';
+      changeTo += '\n';
 
       let key = Math.random().toString( 36 ).substr( 2, 20 );
       let youChooseDiv = <div key={ key }>{ youWear + changeTo }</div>;
 
+      let key2 = Math.random().toString( 36 ).substr( 2, 20 );
+      let prompt = <div key={ key2 }>Enter your choice #: </div>;
+
+      // AUDRY - how know 6 is ok right now?
+      // could use state. guess that's what it's there for
+      // also, how catch that...??
+
       // store/show everything that's happened
       this.setState({
-        whatsHappening: [ ...this.state.whatsHappening, youChooseDiv ]
+        whatsHappening: [ ...this.state.whatsHappening, youChooseDiv, prompt ]
       });
     }
 
