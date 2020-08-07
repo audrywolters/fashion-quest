@@ -4,9 +4,9 @@ const router = express.Router();
 
 // get the all the story senarios
 router.get('/', (req, res) => {
-    pool.query( `SELECT "senario"
-                 FROM "story"
-                 ORDER BY "id" ASC;` )
+    pool.query( `SELECT senario
+                 FROM story
+                 ORDER BY id;` )
             .then( ( result ) => { 
                 res.send( result.rows ) 
             })

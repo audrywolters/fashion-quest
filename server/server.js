@@ -13,6 +13,7 @@ const closetRouter = require('./routes/closet.router');
 const outfitRouter = require('./routes/outfit.router');
 const senarioRouter = require('./routes/senario.router');
 const userRouter = require('./routes/user.router');
+const allClothesRouter = require('./routes/allClothes.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use('/api/closet', closetRouter);
 app.use('/api/outfit', outfitRouter);
 app.use('/api/senario', senarioRouter);
 app.use('/api/user', userRouter);
+app.use('/api/allClothes', allClothesRouter);
 
 // Serve static files
 app.use(express.static('build'));

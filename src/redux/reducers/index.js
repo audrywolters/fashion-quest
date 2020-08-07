@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import allClothes from './allClothesReducer';
 import closet from './closetReducer';
 import errors from './errorsReducer';
 import input from './inputReducer';
@@ -14,6 +15,7 @@ import user from './userReducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
+  allClothes,
   closet,
   errors, // contains registrationMessage and loginMessage
   input,
