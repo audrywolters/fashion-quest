@@ -4,7 +4,7 @@ body {
 }
 
 form {
-    color: #dbd5d5;
+    color: rgb(102, 143, 127);
     width: 30%;
     height: 50px;
     margin: 20px auto;

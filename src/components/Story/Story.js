@@ -37,6 +37,10 @@ class Story extends Component {
       if ( prevProps.reduxState.outfit !== this.props.reduxState.outfit ) {
         this.printOutfit( this.props.reduxState.input );
       }
+
+      if ( prevProps.reduxState.allClothes !== this.props.reduxState.allClothes ) {
+        this.calcChange( this.props.reduxState.input );
+      }
     }
 
     printUserInput = ( input ) => {
@@ -128,9 +132,31 @@ class Story extends Component {
       //this.props.dispatch({ type: 'SET_CLOSET', payload: [] });
     }
 
+    getAllClothes = () => {
+      // saga, get all the clothes for this user
+      this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
+    }
+
     calcChange = ( input ) => {
-      // change shirt or pants
-      // shirt => show wearing and not wearing
+
+      let type = 0;
+      if ( input === 'change shirt' ) {
+        type = 1;
+      } else if ( input === 'change pants' ) {
+        type = 2;
+      }
+
+      const allClothes = this.props.reduxState.allClothes;
+      const ourType = allClothes.filter( cloth => cloth.type === type );
+
+
+      // const wearing = allCloth.filter( cloth => cloth.wearing && cloth.type === type );
+      // const choices = allCloth.filter( cloth => !cloth.wearing && cloth.type === type );
+
+      console.log( 'ourType: ', ourType );
+      //console.log( 'choices: ', choices );
+
+
       // prompt for #
 
       // then what
@@ -146,14 +172,10 @@ class Story extends Component {
           this.getCloset();
           break;
         case 'change shirt':
-          this.getCloset();
-          // clothing type ID shirt = 1
-          this.calcChange( 1 );
+          this.getAllClothes();
           break;
         case 'change pants':
-          this.getCloset();
-          // clothing type ID pants = 2
-          this.calcChange( 2 );
+          this.getAllClothes();
           break;
         case 'k':
           this.printSenario( input ); 
