@@ -6,8 +6,8 @@ class FQBigLogo extends Component {
         return (
             
     <pre className="fqBigLogo">
-{`
-    _ ,                                 
+
+{`   _ ,                                 
   ,- -             ,,                   
  _||_    _         ||     '             
 ' ||    < \,  _-_, ||/\\ \\  /'\\ \\/\\ 
