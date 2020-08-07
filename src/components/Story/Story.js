@@ -148,18 +148,35 @@ class Story extends Component {
 
       const allClothes = this.props.reduxState.allClothes;
       const ourType = allClothes.filter( cloth => cloth.type === type );
+      const wearing = ourType.filter( cloth => cloth.wearing );
+      const choices = ourType.filter( cloth => !cloth.wearing );
 
+      this.printChange( wearing, choices );
+    }
 
-      // const wearing = allCloth.filter( cloth => cloth.wearing && cloth.type === type );
-      // const choices = allCloth.filter( cloth => !cloth.wearing && cloth.type === type );
+    printChange = ( wearing, choices ) => {
 
-      console.log( 'ourType: ', ourType );
-      //console.log( 'choices: ', choices );
+      let w = {};
+      if ( wearing.length === 1 ) {
+        w = wearing[0];
+      } else {
+        console.warn( 'calcChange didnt find item user is wearing' );
+      }
 
+      let youWear = `You are wearing: \n${ w.icon } #${ w.id }: ${ w.color } . ${ w.fit } . ${ w.featureA } . ${ w.featureB } length \n\n`;
+      let changeTo = `You can change into: \n`;
+      for ( let i of choices ) {
+        changeTo += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+      }
+      changeTo += '\n\n';
 
-      // prompt for #
+      let key = Math.random().toString( 36 ).substr( 2, 20 );
+      let youChooseDiv = <div key={ key }>{ youWear + changeTo }</div>;
 
-      // then what
+      // store/show everything that's happened
+      this.setState({
+        whatsHappening: [ ...this.state.whatsHappening, youChooseDiv ]
+      });
     }
 
     whatShallHappenNext = ( input ) => {
