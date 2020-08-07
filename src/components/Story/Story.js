@@ -18,7 +18,7 @@ class Story extends Component {
       // AUDRY - to load a story item right away:
       // get story senario from userID = storyState (will equal senairo 5 or whatevs)
 
-      // store all the story
+      // one shot get all story senarios - these won't change during play
       this.props.dispatch({ type: 'FETCH_SENARIO' });
     }
     
@@ -54,7 +54,8 @@ class Story extends Component {
       // this.props.dispatch({ type: 'SET_INPUT', payload: '' });
     }
     
-    getSenario = () => {
+    // don't have to getSenario as all are gotten in DidMount()
+    printSenario = () => {
 
       // get the senario next in line
       // but beware we run out of senarios!
@@ -127,6 +128,14 @@ class Story extends Component {
       //this.props.dispatch({ type: 'SET_CLOSET', payload: [] });
     }
 
+    calcChange = ( input ) => {
+      // change shirt or pants
+      // shirt => show wearing and not wearing
+      // prompt for #
+
+      // then what
+    }
+
     whatShallHappenNext = ( input ) => {
 
       switch ( input ) {
@@ -134,10 +143,20 @@ class Story extends Component {
           this.getOutfit( input );
           break;
         case 'closet':
-          this.getCloset( input );
+          this.getCloset();
+          break;
+        case 'change shirt':
+          this.getCloset();
+          // clothing type ID shirt = 1
+          this.calcChange( 1 );
+          break;
+        case 'change pants':
+          this.getCloset();
+          // clothing type ID pants = 2
+          this.calcChange( 2 );
           break;
         case 'k':
-          this.getSenario( input ); 
+          this.printSenario( input ); 
           break;
         default:
           this.printUserInput( input );

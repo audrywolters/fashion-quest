@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import FQBigLogo from '../FQBigLogo/FQBigLogo';
 
 class LoginPage extends Component {
   state = {
@@ -41,7 +42,7 @@ class LoginPage extends Component {
           </h2>
         )}
         <form onSubmit={this.login}>
-          <h1>Login</h1>
+          <FQBigLogo />
           <div>
             <label htmlFor="username">
               Username:
@@ -73,7 +74,7 @@ class LoginPage extends Component {
             />
           </div>
         </form>
-        <center>
+        {/* <center>
           <button
             type="button"
             className="link-button"
@@ -81,7 +82,7 @@ class LoginPage extends Component {
           >
             Register
           </button>
-        </center>
+        </center> */}
       </div>
     );
   }
