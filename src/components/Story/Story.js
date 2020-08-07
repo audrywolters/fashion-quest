@@ -5,7 +5,6 @@ import  '../Story/Story.css';
 class Story extends Component {
   
     state = {
-        userID: 0,
         whatsHappening: [],
         whatsCount: 0
     }
@@ -19,8 +18,7 @@ class Story extends Component {
       // AUDRY - to load a story item right away:
       // get story senario from userID = storyState (will equal senairo 5 or whatevs)
 
-      // store all the story items -
-      // AUDRY - should i store all of these. or hit server each time
+      // store all the story
       this.props.dispatch({ type: 'FETCH_SENARIO' });
     }
     
@@ -52,7 +50,8 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv ]
       });
       
-      //this.props.dispatch({ type: 'SET_INPUT', payload: '' });
+      // AUDRY - doesn't work here - prints input and then an empty
+      // this.props.dispatch({ type: 'SET_INPUT', payload: '' });
     }
     
     getSenario = () => {
@@ -81,18 +80,16 @@ class Story extends Component {
 
     getOutfit = () => {
       // ask saga to help us do it
-      this.props.dispatch({ type: 'FETCH_OUTFIT', payload: this.state.userID });
+      this.props.dispatch({ type: 'FETCH_OUTFIT' });
     }
 
     printOutfit = ( input ) => {
-      let o = this.props.reduxState.outfit;
-      let display = '';//'<>';
+      let outfit = this.props.reduxState.outfit;
+      let display = '';
 
-      for ( let i of o ) {
-        display += `${ i.icon } color: ${ i.color } fit: ${ i.fit } 1: ${ i.featureA } 2: ${ i.featureB }`
+      for ( let i of outfit ) {
+        display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
-
-      // display += '</>';
 
       let key = Math.random().toString( 36 ).substr( 2, 20 );
       let newOutfitDiv = <div key={ key }>{ display }</div>;
@@ -111,11 +108,11 @@ class Story extends Component {
     printCloset = ( input ) => {
 
       // yay new div w newly entered text
-      let c = this.props.reduxState.closet;
+      let closet = this.props.reduxState.closet;
       let display = '';
 
-      for ( let i of c ) {
-        display += `${ i.icon } | color: ${ i.color } fit: ${ i.fit } 1: ${ i.featureA } 2: ${ i.featureB }`
+      for ( let i of closet ) {
+        display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
 
       let key = Math.random().toString( 36 ).substr( 2, 20 );
@@ -149,7 +146,7 @@ class Story extends Component {
 
     render() {    
         return (
-            <div className="storyBox"> { this.state.whatsHappening.map( thing => thing ) }</div>
+            <div className="storyBox">{ this.state.whatsHappening.map( thing => thing ) }</div>
         );
     }
 }

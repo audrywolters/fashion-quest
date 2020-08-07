@@ -5,11 +5,13 @@ const router = express.Router();
 // what's in the user's closet
 router.get('/', (req, res) => {
 
-    const queryText = `SELECT i.type, i.icon, i.fit, i.color, i."featureA", i."featureB"
+    const queryText = ` SELECT i.id, i.icon, i.fit, i.color, i."featureA", i."featureB"
                         FROM clothing_item as i
                         JOIN closet as c on c.clothing_item = i.id
                         JOIN "user" as u on u.closet = c.closet_id
-                        WHERE u.id = $1;`
+                        WHERE u.id = $1
+                        AND   c.wearing = false
+                        ORDER BY i.id; `
 
     pool.query( queryText, [ req.user.id ] )
                 

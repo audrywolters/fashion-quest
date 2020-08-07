@@ -5,11 +5,13 @@ const router = express.Router();
 // get the current user's current outfit
 router.get('/', (req, res) => {
 
-    const queryText = `SELECT i.type, i.icon, i.fit, i.color, i."featureA", i."featureB"
+    const queryText = ` SELECT i.id, i.icon, i.fit, i.color, i."featureA", i."featureB"
                         FROM clothing_item as i
-                        JOIN outfit as o on o.clothing_item = i.id
-                        JOIN "user" as u on u.outfit = o.outfit_id
-                        WHERE u.id = $1;`
+                        JOIN closet as c on c.clothing_item = i.id
+                        JOIN "user" as u on u.closet = c.closet_id
+                        WHERE u.id = $1
+                        AND   c.wearing = true
+                        ORDER BY i.id; `
 
     pool.query( queryText, [ req.user.id ] )
                 
