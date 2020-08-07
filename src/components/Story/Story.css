@@ -1,8 +1,11 @@
 .storyBox {
-    border: solid 2px black;
+    border: solid 2px rgb(90, 90, 90);
     width: 75%;
     height: 500px;
+    padding: 10px;
     overflow: auto;
+    color: rgb(106, 141, 128);
+    font: 1em 'Avenir';
 }
 
 div {
