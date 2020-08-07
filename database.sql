@@ -1,10 +1,8 @@
-SELECT  s."clothingType", s.color, s.fit, s.icon, s.neck, s."sleeveLength",
-	    p."clothingType", p.color, p.fit, p.icon, p.cut,  p."legLength"
-FROM 	"user" as u
-JOIN 	outfit as o on o.id       = u.outfit
-JOIN 	shirt  as s on o.shirt_id = s.id
-JOIN 	pant   as p on o.pant_id  = p.id
-WHERE 	u.id = 1;
+SELECT i.type, i.icon, i.fit, i.color, i."featureA", i."featureB"
+FROM clothing_item as i
+JOIN closet as c on c.clothing_item = i.id
+JOIN "user" as u on u.closet = c.closet_id
+WHERE u.id =1;
 
 CREATE TABLE "closet" (
 	"id" SERIAL PRIMARY KEY,	

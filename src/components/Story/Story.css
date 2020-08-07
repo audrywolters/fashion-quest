@@ -2,14 +2,5 @@
     border: solid 2px black;
     width: 75%;
     height: 500px;
-}
-
-.coolBox {
-    padding: 10px;
-    margin: 10px;
-    border: solid 1px;
-    width: 300px;
-    background-color: rgb(170, 214, 204);
-    width: 40%;
-    color: black;
+    overflow: auto;
 }
