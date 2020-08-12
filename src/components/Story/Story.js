@@ -26,6 +26,7 @@ class Story extends Component {
 
       // catch when new input is entered
       if ( prevProps.reduxState.input !== this.props.reduxState.input ) {
+        console.log( 'in componentDidUpdate input' );
         // how will we respond to the user
         this.whatShallHappenNext( this.props.reduxState.input );
       }
@@ -45,9 +46,10 @@ class Story extends Component {
 
     printUserInput = ( input ) => {
 
+      console.log(' print user input' );
       // show new user input!
-      let key = Math.random().toString( 36 ).substr( 2, 20 );
-      let newUserInputDiv = <div key={ key }>--{ input }</div>;
+
+      let newUserInputDiv = <div key={ this.getNewKey() }>--{ input }</div>;
 
       // store/show everything that's happened
       this.setState({
@@ -69,18 +71,21 @@ class Story extends Component {
       }
 
       // get the next in the list
-      // AUDRY - let's just hit the server from now on?
+      // AUDRY - make this state
       let nextSenario = this.props.reduxState.senarioList[ this.state.whatsCount ].senario;
 
-      // yay new div w newly entered text;
-      let key = Math.random().toString(36).substr( 2, 20 );
-      let newSenarioDiv = <div key={ key }>{ nextSenario }</div>;
+      // yay new div w newly entered text
+      let newSenarioDiv = <div key={ this.getNewKey() }>{ nextSenario }</div>;
 
       // store/show everything that's happened
       this.setState({
         whatsHappening: [ ...this.state.whatsHappening, newSenarioDiv ],
         whatsCount: this.state.whatsCount + 1
       });
+    }
+  
+    getNewKey = () => {
+      return Math.random().toString(36).substr( 2, 20 );
     }
 
     getOutfit = () => {
@@ -96,8 +101,7 @@ class Story extends Component {
         display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
 
-      let key = Math.random().toString( 36 ).substr( 2, 20 );
-      let newOutfitDiv = <div key={ key }>{ display }</div>;
+      let newOutfitDiv = <div key={ this.getNewKey() }>{ display }</div>;
 
       // store/show everything that's happened
       this.setState({
@@ -120,8 +124,7 @@ class Story extends Component {
         display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
 
-      let key = Math.random().toString( 36 ).substr( 2, 20 );
-      let newClosetDiv = <div key={ key }>{ display }</div>;
+      let newClosetDiv = <div key={ this.getNewKey() }>{ display }</div>;
         
       // store/show everything that's happened
       this.setState({
@@ -139,6 +142,11 @@ class Story extends Component {
 
     calcChange = ( input ) => {
 
+      // AUDRY - i want to make a 'controller' method
+      // with these methods inside
+      // so it isn't a big long chain
+
+      // AUDRY - this feels bug prone
       let type = 0;
       if ( input === 'change shirt' ) {
         type = 1;
@@ -146,6 +154,7 @@ class Story extends Component {
         type = 2;
       }
 
+      // AUDRY - make this a function
       const allClothes = this.props.reduxState.allClothes;
       const ourType = allClothes.filter( cloth => cloth.type === type );
       const wearing = ourType.filter( cloth => cloth.wearing );
@@ -170,23 +179,32 @@ class Story extends Component {
       }
       changeTo += '\n';
 
-      let key = Math.random().toString( 36 ).substr( 2, 20 );
-      let youChooseDiv = <div key={ key }>{ youWear + changeTo }</div>;
+      let youChooseDiv = <div key={ this.getNewKey() }>{ youWear + changeTo }</div>;
 
-      let key2 = Math.random().toString( 36 ).substr( 2, 20 );
-      let prompt = <div key={ key2 }>Enter your choice #: </div>;
+      let prompt = <div key={ this.getNewKey() }>Enter your choice #: </div>;
 
-      // AUDRY - how know 6 is ok right now?
-      // could use state. guess that's what it's there for
-      // also, how catch that...??
+      // i don't want this shit to trigger everything.
+      // but I have to print the prompt
+
+
 
       // store/show everything that's happened
       this.setState({
         whatsHappening: [ ...this.state.whatsHappening, youChooseDiv, prompt ]
       });
+
+      this.whatShallHappenWhenChangeOutfit();
+    }
+
+    whatShallHappenWhenChangeOutfit = () => {
+        console.log( 'in whatShallHappenWhenChangeOutfit' );
     }
 
     whatShallHappenNext = ( input ) => {
+
+      
+      console.log( 'in whatShallHappenNext - input: ', input );
+
 
       switch ( input ) {
         case 'outfit':
@@ -196,9 +214,9 @@ class Story extends Component {
           this.getCloset();
           break;
         case 'change shirt':
-          this.getAllClothes();
-          break;
-        case 'change pants':
+
+        // AUDRY - send to change controller
+        // have to get clothes b4? how did this work... synchro
           this.getAllClothes();
           break;
         case 'k':
@@ -211,7 +229,11 @@ class Story extends Component {
 
     render() {    
         return (
-            <div className="storyBox">{ this.state.whatsHappening.map( thing => thing ) }</div>
+            <div className="storyBox">
+              { 
+                this.state.whatsHappening.map( div => div )
+              }
+            </div>
         );
     }
 }
