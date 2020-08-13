@@ -178,28 +178,32 @@ class Story extends Component {
     whatShallHappenWhenChangeOutfit = ( input ) => {
 
       // check user choices out
-      let clothID = Number( input );
-      console.log('clothID', clothID)
+      let changeIntoID = Number( input );
 
-      if ( Number.isNaN( clothID ) ) {
-        console.warn( ':,( change outfit didnt understand the clothign ID: ', clothID )
+      if ( Number.isNaN( changeIntoID ) ) {
+        console.warn( ':,( change outfit didnt understand the clothing ID: ', changeIntoID )
         return;
       }
 
-      // now make sure it is in their closet
-      
-      const have = this.props.reduxState.closet.find( cloth => cloth.id === clothID);
-      console.log('have: ', have)
-      if (have) {
-        console.log('yay we have: ', have)
+      // now make sure it is in their closet     
+      const have = this.props.reduxState.closet.find( cloth => cloth.id === changeIntoID );
+      if ( !have ) {
+        console.warn( ':,( change outfit couldnt find the clothing ID: ', changeIntoID );
+        return;
       }
-   
-      // update it!
-      //this.props.dispatch({ type: 'CHANGE_OUTFIT', payload: input });
+console.log('have ', have)
+      // what clothing are we replacing
+      // check by clothing type ( shirt or pants )
+      const changeOutOf = this.props.reduxState.outfit.find( cloth => cloth.type === have.type );
+  
+      // make a nice object server can understand
+      let updateData = {
+        changeOutOf: changeOutOf.id, 
+        changeInto: changeIntoID
+      }
 
-      // AUDRY - after all done - unset!
-      //this.props.dispatch({ type: 'UNSET_CHANGE_MODE' });
-      
+      // update it!
+      this.props.dispatch({ type: 'CHANGE_OUTFIT', payload: updateData });
     }
 
     whatShallHappenNext = ( input ) => {

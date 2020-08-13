@@ -4,12 +4,11 @@ import { put, takeLatest } from 'redux-saga/effects';
 
   function* updateOutfit( action ) {
     try {
-      //const response = yield axios.put( '/api/change', action.payload );
-      
-      yield put({ type: 'UPDATE_OUTFIT', payload: 'meow' });//response.data });
+      const response = yield axios.put( '/api/change', action.payload );   
+      yield put({ type: 'UPDATE_OUTFIT', payload: response.data });
       
     } catch (error) {
-      console.log('Change Outfit Put request failed', error);
+      console.log( 'Change Outfit Put request failed', error );
     }
   }
 
