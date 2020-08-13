@@ -11,14 +11,10 @@ class Story extends Component {
 
     componentDidMount() {
 
-      this.setState({
-        userID: this.props.reduxState.user.id
-      })
-
       // AUDRY - to load a story item right away:
       // get story senario from userID = storyState (will equal senairo 5 or whatevs)
 
-      // one shot get all story senarios - these won't change during play
+      // one shot get all story senarios - these won't change
       this.props.dispatch({ type: 'FETCH_SENARIO' });
     }
     
@@ -40,29 +36,27 @@ class Story extends Component {
       }
 
       if ( prevProps.reduxState.allClothes !== this.props.reduxState.allClothes ) {
-        this.calcChange( this.props.reduxState.input );
+        this.calcChange();
       }
     }
 
     printUserInput = ( input ) => {
 
-      console.log(' print user input' );
-      // show new user input!
-
-      let newUserInputDiv = <div key={ this.getNewKey() }>--{ input }</div>;
+      // show what the user typed
+      let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ input }</div>;
 
       // store/show everything that's happened
       this.setState({
         whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv ]
       });
       
-      // AUDRY - doesn't work here - prints input and then an empty
-      // this.props.dispatch({ type: 'SET_INPUT', payload: '' });
+      // clear so input will be checked even if it is the same thing typed
+      this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });
     }
     
     // don't have to getSenario as all are gotten in DidMount()
     printSenario = () => {
-
+      
       // get the senario next in line
       // but beware we run out of senarios!
       if ( this.props.reduxState.senarioList.length < this.state.whatsCount + 1 ) {
@@ -71,7 +65,6 @@ class Story extends Component {
       }
 
       // get the next in the list
-      // AUDRY - make this state
       let nextSenario = this.props.reduxState.senarioList[ this.state.whatsCount ].senario;
 
       // yay new div w newly entered text
@@ -130,9 +123,6 @@ class Story extends Component {
       this.setState({
         whatsHappening: [ ...this.state.whatsHappening, input, newClosetDiv ]
       });
-
-      // erase so componentDidUpdate won't ignore us
-      //this.props.dispatch({ type: 'SET_CLOSET', payload: [] });
     }
 
     getAllClothes = () => {
@@ -140,53 +130,38 @@ class Story extends Component {
       this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
     }
 
-    calcChange = ( input ) => {
+    calcChange = () => {
+    
+      const allClothes = this.props.reduxState.allClothes;
+      const wearing = allClothes.filter( cloth => cloth.wearing );
 
-      // AUDRY - i want to make a 'controller' method
-      // with these methods inside
-      // so it isn't a big long chain
-
-      // AUDRY - this feels bug prone
-      let type = 0;
-      if ( input === 'change shirt' ) {
-        type = 1;
-      } else if ( input === 'change pants' ) {
-        type = 2;
+      for (let cloth of allClothes ) {
+        if (cloth.wearing ) {
+          console.log('wearing: ', cloth)
+        }
       }
 
-      // AUDRY - make this a function
-      const allClothes = this.props.reduxState.allClothes;
-      const ourType = allClothes.filter( cloth => cloth.type === type );
-      const wearing = ourType.filter( cloth => cloth.wearing );
-      const choices = ourType.filter( cloth => !cloth.wearing );
+      const choices = allClothes.filter( cloth => !cloth.wearing );
 
       this.printChangeChoice( wearing, choices );
     }
 
     printChangeChoice = ( wearing, choices ) => {
 
-      let w = {};
-      if ( wearing.length === 1 ) {
-        w = wearing[0];
-      } else {
-        console.warn( 'calcChange didnt find item user is wearing' );
+      let youWear = `You are wearing: \n`;
+      for ( let i of wearing ) {
+        youWear += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
+      youWear += '\n';
 
-      let youWear = `You are wearing: \n${ w.icon } #${ w.id }: ${ w.color } . ${ w.fit } . ${ w.featureA } . ${ w.featureB } length \n\n`;
       let changeTo = `You can change into: \n`;
       for ( let i of choices ) {
         changeTo += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
       changeTo += '\n';
-
+      
       let youChooseDiv = <div key={ this.getNewKey() }>{ youWear + changeTo }</div>;
-
       let prompt = <div key={ this.getNewKey() }>Enter your choice #: </div>;
-
-      // i don't want this shit to trigger everything.
-      // but I have to print the prompt
-
-
 
       // store/show everything that's happened
       this.setState({
@@ -201,10 +176,8 @@ class Story extends Component {
     }
 
     whatShallHappenNext = ( input ) => {
-
       
-      console.log( 'in whatShallHappenNext - input: ', input );
-
+      this.printUserInput( input );
 
       switch ( input ) {
         case 'outfit':
@@ -213,23 +186,22 @@ class Story extends Component {
         case 'closet':
           this.getCloset();
           break;
-        case 'change shirt':
-
-        // AUDRY - send to change controller
-        // have to get clothes b4? how did this work... synchro
+        case 'change':
           this.getAllClothes();
           break;
         case 'k':
-          this.printSenario( input ); 
+          this.printSenario( input );
           break;
         default:
-          this.printUserInput( input );
+          // do nothing
       }
+
     }
 
     render() {    
         return (
             <div className="storyBox">
+              {/* all we are doing is printing the entire array each change */}
               { 
                 this.state.whatsHappening.map( div => div )
               }
