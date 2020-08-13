@@ -24,7 +24,7 @@ class Story extends Component {
       if ( prevProps.reduxState.change === 'change mode' &&
            prevProps.reduxState.input !== this.props.reduxState.input ) {
         // the user wants to update a clothing by ID
-        this.whatShallHappenWhenChangeOutfit( this.props.reduxState.input );
+        this.setChangeOutfit( this.props.reduxState.input );
       }
 
       // catch when new input is entered
@@ -42,9 +42,8 @@ class Story extends Component {
       }
 
       if ( prevProps.reduxState.allClothes !== this.props.reduxState.allClothes ) {
-        this.calcChange();
+        this.printChangeOutfit();
       }
-
     }
 
     printUserInput = ( input ) => {
@@ -56,7 +55,6 @@ class Story extends Component {
       this.setState({
         whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv ]
       });
-      
     }
     
     // don't have to getSenario as all are gotten in DidMount()
@@ -138,19 +136,12 @@ class Story extends Component {
       this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
     }
 
-    calcChange = () => {
-    
+    printChangeOutfit = () => {
+
       const allClothes = this.props.reduxState.allClothes;
       const wearing = allClothes.filter( cloth => cloth.wearing );
       const choices = allClothes.filter( cloth => !cloth.wearing );
 
-      this.printChangeChoice( wearing, choices );
-    }
-
-    printChangeChoice = ( wearing, choices ) => {
-
-      // AUDRY - this could be done with redux closet/outfit
-      // fix later
       let youWear = `You are wearing: \n`;
       for ( let i of wearing ) {
         youWear += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
@@ -172,10 +163,9 @@ class Story extends Component {
       });
 
       this.props.dispatch({ type: 'SET_TO_CHANGE_MODE' });
-
     }
 
-    whatShallHappenWhenChangeOutfit = ( input ) => {
+    setChangeOutfit = ( input ) => {
 
       // check user choices out
       let changeIntoID = Number( input );
@@ -191,7 +181,7 @@ class Story extends Component {
         console.warn( ':,( change outfit couldnt find the clothing ID: ', changeIntoID );
         return;
       }
-console.log('have ', have)
+
       // what clothing are we replacing
       // check by clothing type ( shirt or pants )
       const changeOutOf = this.props.reduxState.outfit.find( cloth => cloth.type === have.type );
@@ -223,15 +213,9 @@ console.log('have ', have)
         case 'k':
           this.printSenario( input );
           break;
-        
         default:
-          // if (this.props.reduxState.change === 'change mode') {
-          //   this.whatShallHappenWhenChangeOutfit( input );
-          // }
           // do nothing
       }
-
-
     }
 
     render() {    
