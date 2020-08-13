@@ -16,13 +16,19 @@ class Story extends Component {
 
       // one shot get all story senarios - these won't change
       this.props.dispatch({ type: 'FETCH_SENARIO' });
+      // set closet and outfit somehow w/o printing...
     }
     
     componentDidUpdate( prevProps ) {
 
+      if ( prevProps.reduxState.change === 'change mode' &&
+           prevProps.reduxState.input !== this.props.reduxState.input ) {
+        // the user wants to update a clothing by ID
+        this.whatShallHappenWhenChangeOutfit( this.props.reduxState.input );
+      }
+
       // catch when new input is entered
       if ( prevProps.reduxState.input !== this.props.reduxState.input ) {
-        console.log( 'in componentDidUpdate input' );
         // how will we respond to the user
         this.whatShallHappenNext( this.props.reduxState.input );
       }
@@ -38,6 +44,7 @@ class Story extends Component {
       if ( prevProps.reduxState.allClothes !== this.props.reduxState.allClothes ) {
         this.calcChange();
       }
+
     }
 
     printUserInput = ( input ) => {
@@ -50,8 +57,6 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv ]
       });
       
-      // clear so input will be checked even if it is the same thing typed
-      this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });
     }
     
     // don't have to getSenario as all are gotten in DidMount()
@@ -75,6 +80,9 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, newSenarioDiv ],
         whatsCount: this.state.whatsCount + 1
       });
+
+      // clear so input will be checked even if it is the same thing typed
+      this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });
     }
   
     getNewKey = () => {
@@ -134,13 +142,6 @@ class Story extends Component {
     
       const allClothes = this.props.reduxState.allClothes;
       const wearing = allClothes.filter( cloth => cloth.wearing );
-
-      for (let cloth of allClothes ) {
-        if (cloth.wearing ) {
-          console.log('wearing: ', cloth)
-        }
-      }
-
       const choices = allClothes.filter( cloth => !cloth.wearing );
 
       this.printChangeChoice( wearing, choices );
@@ -148,6 +149,8 @@ class Story extends Component {
 
     printChangeChoice = ( wearing, choices ) => {
 
+      // AUDRY - this could be done with redux closet/outfit
+      // fix later
       let youWear = `You are wearing: \n`;
       for ( let i of wearing ) {
         youWear += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
@@ -159,7 +162,7 @@ class Story extends Component {
         changeTo += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
       }
       changeTo += '\n';
-      
+
       let youChooseDiv = <div key={ this.getNewKey() }>{ youWear + changeTo }</div>;
       let prompt = <div key={ this.getNewKey() }>Enter your choice #: </div>;
 
@@ -168,11 +171,35 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, youChooseDiv, prompt ]
       });
 
-      this.whatShallHappenWhenChangeOutfit();
+      this.props.dispatch({ type: 'SET_TO_CHANGE_MODE' });
+
     }
 
-    whatShallHappenWhenChangeOutfit = () => {
-        console.log( 'in whatShallHappenWhenChangeOutfit' );
+    whatShallHappenWhenChangeOutfit = ( input ) => {
+
+      // check user choices out
+      let clothID = Number( input );
+      console.log('clothID', clothID)
+
+      if ( Number.isNaN( clothID ) ) {
+        console.warn( ':,( change outfit didnt understand the clothign ID: ', clothID )
+        return;
+      }
+
+      // now make sure it is in their closet
+      
+      const have = this.props.reduxState.closet.find( cloth => cloth.id === clothID);
+      console.log('have: ', have)
+      if (have) {
+        console.log('yay we have: ', have)
+      }
+   
+      // update it!
+      //this.props.dispatch({ type: 'CHANGE_OUTFIT', payload: input });
+
+      // AUDRY - after all done - unset!
+      //this.props.dispatch({ type: 'UNSET_CHANGE_MODE' });
+      
     }
 
     whatShallHappenNext = ( input ) => {
@@ -192,9 +219,14 @@ class Story extends Component {
         case 'k':
           this.printSenario( input );
           break;
+        
         default:
+          // if (this.props.reduxState.change === 'change mode') {
+          //   this.whatShallHappenWhenChangeOutfit( input );
+          // }
           // do nothing
       }
+
 
     }
 
