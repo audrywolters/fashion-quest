@@ -11,3 +11,9 @@
 div {
     white-space: pre-wrap;
 }
+
+.userInput {
+    font-weight: bold;
+    font-style: italic;
+    text-align: right;
+}

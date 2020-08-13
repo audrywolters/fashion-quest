@@ -26,7 +26,7 @@ class UserInput extends Component {
     }
 }
 
-// AUDRY - remove if not use
+
 const mapStateToProps = ( reduxState ) => ({
   reduxState
 });

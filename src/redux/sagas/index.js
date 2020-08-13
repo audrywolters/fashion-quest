@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects';
 import allClothesSaga from './allClothesSaga';
+import changeSaga from './changeSaga';
 import closetSaga from './closetSaga';
 import inputSaga from './inputSaga';
 import loginSaga from './loginSaga';
@@ -18,6 +19,7 @@ import userSaga from './userSaga';
 export default function* rootSaga() {
   yield all([
     allClothesSaga(),
+    changeSaga(),
     closetSaga(),
     inputSaga(),
     loginSaga(),
