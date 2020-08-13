@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import allClothes from './allClothesReducer';
+import change from './changeReducer';
 import closet from './closetReducer';
 import errors from './errorsReducer';
 import input from './inputReducer';
@@ -16,6 +17,7 @@ import user from './userReducer';
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
   allClothes,
+  change,
   closet,
   errors, // contains registrationMessage and loginMessage
   input,
