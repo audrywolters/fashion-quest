@@ -3,32 +3,53 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // what's in the user's closet
-router.put('/', (req, res) => {
+router.put('/', async (req, res) => {
 
-        const queryText =  `UPDATE closet
-                            SET wearing = true
-                            WHERE id = $3
-                            AND closet_id = $1;
-                            
-                            UPDATE closet
-                            SET wearing = false
-                            WHERE id = $2
-                            AND closet_id = $1;
-                            
-                            UPDATE outfit
-                            SET clothing_item = $3
-                            WHERE clothing_item = $2
-                            AND outfit_id = $1;`
+    console.log(`req.body`, req.body);
 
-    pool.query( queryText, [ req.user.id, req.params.changeOutOf, req.params.changeInto ] )
-                
-            .then( ( result ) => { 
-                res.send( result.rows ) 
-            })
-            .catch( ( error ) => {
-                console.log( 'Error GET details', error )
-                res.sendStatus( 500 );  
-            });
-        });
+    // Get a single connection from the pool to do the transaction
+    // THIS IS IMPORTANT - won't work if you don't use the same connection!
+    const connection = await pool.connect();
+
+    try {
+        // Start transaction
+        await connection.query( 'BEGIN;' );
+
+        const toTakeOff = req.body.changeOutOf;
+        const toPutOn   = req.body.changeInto;
+        
+        // put clothing back in closet
+        const takeOffClothing = `UPDATE closet
+                                 SET wearing = false
+                                 WHERE clothing_item = $1;`
+        await connection.query( takeOffClothing, [toTakeOff] );
+
+        // take out new piece
+        const putOnClothing =  `UPDATE closet
+                                SET wearing = true
+                                WHERE clothing_item = $1;`
+        await connection.query( putOnClothing, [toPutOn] );
+
+        // wear it!
+        const changeOutfit =   `UPDATE outfit
+                                SET clothing_item = $1
+                                WHERE clothing_item = $2;`
+        await connection.query ( changeOutfit, [toPutOn, toTakeOff] );
+
+        // cross fingers
+        await connection.query( 'COMMIT;' );
+        res.sendStatus( 200 );
+
+    } catch ( error ) {
+        console.log( 'Error on Update Clothing: ', error );
+        // bummer, have to cancel everything
+        await connection.query( 'ROLLBACK' );
+        res.sendStatus( 200 );
+
+    } finally {
+        // goodbye DB
+        connection.release();
+    }
+})
 
 module.exports = router;
