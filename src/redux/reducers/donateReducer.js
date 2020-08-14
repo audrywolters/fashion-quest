@@ -1,4 +1,4 @@
-const donateReducer = ( state = '', action ) => {
+const donateReducer = ( state = [], action ) => {
     switch ( action.type ) {
         case 'DONATE':
             return action.payload;

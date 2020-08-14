@@ -1,11 +1,10 @@
 
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 
   function* donateClothing( action ) {
     try {
-      const response = yield axios.post( '/api/donate', action.payload );   
-      yield put({ type: 'DONATE_DELETE', payload: response.data });
+      yield axios.post( '/api/donate', action.payload );
       
     } catch (error) {
       console.log( 'Donate clothing DELETE request failed', error );

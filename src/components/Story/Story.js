@@ -99,8 +99,42 @@ class Story extends Component {
     //#endregion
 
     //#region SET
-    setDonate = () => {
-      console.log('woo donate');
+    setDonate = () => {      
+      this.getAllClothes();
+      this.getCloset();
+      this.getOutfit();
+
+
+      // check user choices out
+      let removeID = Number( this.state.userInput );
+
+      if ( Number.isNaN( removeID ) ) {
+        console.warn( ':,( Donate outfit didnt Understand the clothing ID: ', removeID )
+        return;
+      }
+
+      // now make sure it is in their closet     
+      const have = this.props.reduxState.closet.find( cloth => cloth.id === removeID );
+      if ( !have ) {
+        console.warn( ':,( Donte outfit couldnt Find the clothing ID: ', removeID );
+        return;
+      }
+
+      // make a nice object server can understand
+      let updateData = {
+        removeID: removeID
+      }
+
+      // update it!
+      this.props.dispatch({ type: 'DONATE', payload: updateData });
+
+      this.setState({
+        mode: ''
+      });
+        
+      this.getAllClothes();
+      this.getCloset();
+      this.getOutfit();
     }
 
     setOutfit = () => {
@@ -137,11 +171,13 @@ class Story extends Component {
       // update it!
       this.props.dispatch({ type: 'CHANGE_OUTFIT', payload: updateData });
 
-      this.getOutfit();
-
       this.setState({
         mode: ''
       });
+        
+      this.getAllClothes();
+      this.getCloset();
+      this.getOutfit();
     }
     //#endregion
 

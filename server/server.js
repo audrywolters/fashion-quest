@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const changeRouter = require('./routes/change.router');
 const closetRouter = require('./routes/closet.router');
+const donateRouter = require('./routes/donate.router');
 const outfitRouter = require('./routes/outfit.router');
 const senarioRouter = require('./routes/senario.router');
 const userRouter = require('./routes/user.router');
@@ -30,6 +31,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/change', changeRouter);
 app.use('/api/closet', closetRouter);
+app.use('/api/donate', donateRouter);
 app.use('/api/outfit', outfitRouter);
 app.use('/api/senario', senarioRouter);
 app.use('/api/user', userRouter);

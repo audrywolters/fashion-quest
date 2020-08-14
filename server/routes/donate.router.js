@@ -3,16 +3,20 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // get all clothes per user
-router.get('/', (req, res) => {
-    // AUDRY - NOT DONE!
-    const queryText = ` DELETE FROM closet
-                        WHERE clothing_item = 6 
-                        AND   closet_item = 1;`
+router.post('/', (req, res) => {
 
-    pool.query( queryText, [ req.user.id ] )
+    console.log('in delete');
+
+    const removeID   = req.body.removeID;
+
+    const queryText = ` DELETE FROM closet
+                        WHERE clothing_item = $1 
+                        AND   closet_id = $2;`
+
+    pool.query( queryText, [ removeID, req.user.id ] )
                 
             .then( ( result ) => { 
-                res.send( result.rows ) 
+                console.log( 'delete clothing: ', result )
             })
             .catch( ( error ) => {
                 console.log( 'Error GET details', error )
