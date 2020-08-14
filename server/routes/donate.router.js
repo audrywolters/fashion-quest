@@ -4,13 +4,10 @@ const router = express.Router();
 
 // get all clothes per user
 router.get('/', (req, res) => {
-
-    const queryText = ` SELECT i.id, i.icon, i.fit, i.color, i."featureA", i."featureB", i.type, c.wearing
-                        FROM clothing_item as i
-                        JOIN closet as c on c.clothing_item = i.id
-                        JOIN "user" as u on u.closet = c.closet_id
-                        WHERE u.id = $1
-                        ORDER BY i.id; `
+    // AUDRY - NOT DONE!
+    const queryText = ` DELETE FROM closet
+                        WHERE clothing_item = 6 
+                        AND   closet_item = 1;`
 
     pool.query( queryText, [ req.user.id ] )
                 
@@ -25,3 +22,6 @@ router.get('/', (req, res) => {
 
 
 module.exports = router;
+
+    
+
