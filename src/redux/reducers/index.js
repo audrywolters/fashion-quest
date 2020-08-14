@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import allClothes from './allClothesReducer';
 import change from './changeReducer';
 import closet from './closetReducer';
+import donate from './donateReducer';
 import errors from './errorsReducer';
 import input from './inputReducer';
 import loginMode from './loginModeReducer';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   allClothes,
   change,
   closet,
+  donate,
   errors, // contains registrationMessage and loginMessage
   input,
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown

@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 import allClothesSaga from './allClothesSaga';
 import changeSaga from './changeSaga';
 import closetSaga from './closetSaga';
+import donateSaga from './donateSaga';
 import inputSaga from './inputSaga';
 import loginSaga from './loginSaga';
 import outfitSaga from './outfitSaga';
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     allClothesSaga(),
     changeSaga(),
     closetSaga(),
+    donateSaga(),
     inputSaga(),
     loginSaga(),
     outfitSaga(),
