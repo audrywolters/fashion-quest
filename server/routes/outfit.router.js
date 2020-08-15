@@ -1,9 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // get the current user's current outfit
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 
     const queryText = ` SELECT i.id, i.icon, i.fit, i.color, i."featureA", i."featureB", i.type
                         FROM clothing_item as i

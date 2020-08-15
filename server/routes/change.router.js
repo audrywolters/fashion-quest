@@ -1,9 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // what's in the user's closet
-router.put('/', async (req, res) => {
+router.put('/', rejectUnauthenticated, async (req, res) => {
 
     console.log(`req.body`, req.body);
 

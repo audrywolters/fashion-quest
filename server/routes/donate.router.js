@@ -1,9 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // get all clothes per user
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
 
     console.log('in delete');
 

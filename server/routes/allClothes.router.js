@@ -1,15 +1,16 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // get all clothes per user
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 
     const queryText = ` SELECT i.id, i.icon, i.fit, i.color, i."featureA", i."featureB", i.type, c.wearing
                         FROM clothing_item as i
                         JOIN closet as c on c.clothing_item = i.id
                         JOIN "user" as u on u.closet = c.closet_id
-                        WHERE u.id = $1
+       df                 WHERE u.id = $1
                         ORDER BY i.id; `
 
     pool.query( queryText, [ req.user.id ] )
