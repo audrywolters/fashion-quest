@@ -24,10 +24,23 @@ router.get('/', (req, res) => {
         });
 
 router.post('/', (req, res) => {
-    // INSERT INTO closet (closet_id, clothing_item, wearing)
-    // SELECT <userID>, <clothing_id>, false;
-});
 
+    const userID = req.user.id;
+    const clothing_id = req.body.newClothingID;
+
+    const queryText =  `INSERT INTO closet (closet_id, clothing_item, wearing)
+                        VALUES ($1, $2, $3);`
+
+    pool.query( queryText, [ userID, clothing_id, 'false' ] )
+                
+            .then( ( result ) => { 
+                res.sendStatus( 200 )
+            })
+            .catch( ( error ) => {
+                console.log( 'Error GET details', error )
+                res.sendStatus( 500 );  
+            });
+        });
 
 module.exports = router;
 

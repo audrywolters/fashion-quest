@@ -137,16 +137,16 @@ class Story extends Component {
       this.getOutfit();
     }
 
-    setNew = ( newID ) => {
+    setNewClothing = ( newClothingID ) => {
       
-      if ( Number.isNaN( newID ) ) {
-        console.warn( ':,( New outfit didnt Understand the clothing ID: ', newID )
+      if ( Number.isNaN( newClothingID ) ) {
+        console.warn( ':,( New clothing didnt Understand the clothing ID: ', newClothingID )
         return;
       }
 
       // make a nice object server can understand
       let updateData = {
-        newID: newID
+        newClothingID: newClothingID
       }
 
       // update it!
@@ -272,15 +272,17 @@ class Story extends Component {
     printNewClothing = () => {
 
       let n = this.props.reduxState.newClothing;
-      let newFindText = `wow you found this new clothing \n`
-      newFindText += `${ n.icon } #${ n.id }: ${ n.color } . ${ n.fit } . ${ n.featureA } . ${ n.featureB } length \n`;
-      newFindText += `You want to keep it?\n(y/n)\n`;
-      let newFindPrompt = <div key={ this.getNewKey() }>{ newFindText }</div>;
+      let foundNewItem = `\nHey you found clothes in a garbage can!\n`
+      foundNewItem += `${ n.icon } #${ n.id }: ${ n.color } . ${ n.fit } . ${ n.featureA } . ${ n.featureB } length \n`;
+      foundNewItem += `Cool let\'s keep it.`;
+      let foundNewItemDiv = <div key={ this.getNewKey() }>{ foundNewItem }</div>;
 
       // store/show everything that's happened
       this.setState({
-        whatsHappening: [ ...this.state.whatsHappening, newFindPrompt ]
+        whatsHappening: [ ...this.state.whatsHappening, foundNewItemDiv ]
       });
+
+      this.setNewClothing(n.id);
     }
 
     printOutfit = ( userInput ) => {
