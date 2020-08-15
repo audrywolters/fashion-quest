@@ -1,9 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // you found new item!
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 
     const queryText =  `SELECT *
                         FROM clothing_item AS i

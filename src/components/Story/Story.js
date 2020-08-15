@@ -20,13 +20,17 @@ class Story extends Component {
       this.props.dispatch({ type: 'FETCH_SENARIO' });
 
       // load initial clothing into redux (these can change)
-      this.getAllClothes();
       this.getOutfit();
       this.getCloset();
       this.getNewClothing();
     }
     
     componentDidUpdate( prevProps ) {
+
+      // keep shiv updated
+      this.getOutfit();
+      this.getCloset();
+      this.getNewClothing();
 
       if ( prevProps.reduxState.input !== this.props.reduxState.input ) {
 
@@ -77,10 +81,10 @@ class Story extends Component {
     }
 
     //#region GET
-    getAllClothes = () => {
-      // saga, get all the clothes for this user
-      this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
-    }
+    // getAllClothes = () => {
+    //   // saga, get all the clothes for this user
+    //   this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
+    // }
 
     getCloset = () => {
       // ask saga to help us do it
@@ -99,11 +103,7 @@ class Story extends Component {
     //#endregion
 
     //#region SET
-    setDonate = () => {      
-      this.getAllClothes();
-      this.getCloset();
-      this.getOutfit();
-
+    setDonate = () => {
 
       // check user choices out
       let removeID = Number( this.props.reduxState.input );
@@ -131,10 +131,6 @@ class Story extends Component {
       this.setState({
         mode: ''
       });
-        
-      this.getAllClothes();
-      this.getCloset();
-      this.getOutfit();
     }
 
     setNewClothing = ( newClothingID ) => {
@@ -154,11 +150,6 @@ class Story extends Component {
     }
 
     setOutfit = () => {
-      this.getAllClothes();
-      this.getCloset();
-      this.getOutfit();
-
-
       // check user choices out
       let changeIntoID = Number( this.props.reduxState.input );
 
@@ -190,10 +181,6 @@ class Story extends Component {
       this.setState({
         mode: ''
       });
-        
-      this.getAllClothes();
-      this.getCloset();
-      this.getOutfit();
     }
     //#endregion
 
@@ -202,9 +189,8 @@ class Story extends Component {
       
       let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
 
-      const allClothes = this.props.reduxState.allClothes;
-      const wearing = allClothes.filter( cloth => cloth.wearing );
-      const choices = allClothes.filter( cloth => !cloth.wearing );
+      const wearing = this.props.reduxState.outfit;
+      const choices = this.props.reduxState.closet;
 
       let youWear = `You are wearing: \n`;
       for ( let i of wearing ) {
@@ -251,8 +237,7 @@ class Story extends Component {
 
       let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
 
-      const allClothes = this.props.reduxState.allClothes;
-      const choices = allClothes.filter( cloth => !cloth.wearing );
+      const choices = this.props.reduxState.closet;
 
       let donatableClothes = `What would you like to donate: \n`;
       for ( let i of choices ) {
