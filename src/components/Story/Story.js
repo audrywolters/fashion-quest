@@ -72,7 +72,7 @@ class Story extends Component {
 
         // AUDRY - don't know if this is ok here...
         // clear so input will be checked even if it is the same thing typed
-        // this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });      
+        this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });      
       }
     }
 
