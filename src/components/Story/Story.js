@@ -70,7 +70,6 @@ class Story extends Component {
             // ?
         }
 
-        // AUDRY - don't know if this is ok here...
         // clear so input will be checked even if it is the same thing typed
         this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });      
       }
@@ -85,6 +84,11 @@ class Story extends Component {
     getCloset = () => {
       // ask saga to help us do it
       this.props.dispatch({ type: 'FETCH_CLOSET' });
+    }
+    
+    getNewClothing = () => {
+      // ask saga to help us do it
+      this.props.dispatch({ type: 'FETCH_NEW_CLOTHING_ID' });
     }
 
     getOutfit = () => {
@@ -130,6 +134,22 @@ class Story extends Component {
       this.getAllClothes();
       this.getCloset();
       this.getOutfit();
+    }
+
+    setNew = ( newID ) => {
+      
+      if ( Number.isNaN( newID ) ) {
+        console.warn( ':,( New outfit didnt Understand the clothing ID: ', newID )
+        return;
+      }
+
+      // make a nice object server can understand
+      let updateData = {
+        newID: newID
+      }
+
+      // update it!
+      this.props.dispatch({ type: 'ADD_NEW_CLOTHING', payload: updateData });
     }
 
     setOutfit = () => {
@@ -248,12 +268,45 @@ class Story extends Component {
       });
     }
 
+    printNewClothing = ( userInput ) => {
+
+      // AUDRY - HACK
+      // get new piece from DB
+      // check if in closet already
+      // maybe SQL = select * WHERE clothing_id NOT IN (user closet item IDs: 1, 3, 4, 6, 12)
+
+
+
+
+
+
+
+
+      // let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
+
+      // const allClothes = this.props.reduxState.allClothes;
+      // const choices = allClothes.filter( cloth => !cloth.wearing );
+
+      // let donatableClothes = `What would you like to donate: \n`;
+      // for ( let i of choices ) {
+      //   donatableClothes += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+      // }
+      // donatableClothes += '\n';
+
+      // let youChooseDiv = <div key={ this.getNewKey() }>{ donatableClothes }</div>;
+      // let prompt = <div key={ this.getNewKey() }>Enter your choice #: </div>;
+
+      // // store/show everything that's happened
+      // this.setState({
+      //   whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv, youChooseDiv, prompt ]
+      // });
+    }
+
     printOutfit = ( userInput ) => {
 
       let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
 
       let outfit = this.props.reduxState.outfit;
-      console.log('outfit: ', outfit);
       let display = '';
 
       for ( let i of outfit ) {
@@ -290,6 +343,11 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv, newSenarioDiv ],
         whatsCount: this.state.whatsCount + 1
       });
+
+      // AUDRY - HACK - add bool flag to senario table?
+      if ( nextSenario === 'you found an item') {
+        this.printNewClothing();
+      }
     }
 
     printUserInput = ( userInput ) => {
