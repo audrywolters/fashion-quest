@@ -5,6 +5,7 @@ import closetSaga from './closetSaga';
 import donateSaga from './donateSaga';
 import inputSaga from './inputSaga';
 import loginSaga from './loginSaga';
+import newClothingSaga from './newClothingSaga';
 import outfitSaga from './outfitSaga';
 import registrationSaga from './registrationSaga';
 import senarioSaga from './senarioSaga';
@@ -25,6 +26,7 @@ export default function* rootSaga() {
     donateSaga(),
     inputSaga(),
     loginSaga(),
+    newClothingSaga(),
     outfitSaga(),
     registrationSaga(),
     userSaga(),
