@@ -2,13 +2,10 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-
-
-
 // you found new item!
 router.get('/', (req, res) => {
 
-    const queryText =  `SELECT id
+    const queryText =  `SELECT *
                         FROM clothing_item AS i
                         WHERE i.id NOT IN ( SELECT clothing_item
                                             FROM closet

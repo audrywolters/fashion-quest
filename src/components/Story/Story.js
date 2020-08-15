@@ -23,6 +23,7 @@ class Story extends Component {
       this.getAllClothes();
       this.getOutfit();
       this.getCloset();
+      this.getNewClothing();
     }
     
     componentDidUpdate( prevProps ) {
@@ -88,7 +89,7 @@ class Story extends Component {
     
     getNewClothing = () => {
       // ask saga to help us do it
-      this.props.dispatch({ type: 'FETCH_NEW_CLOTHING_ID' });
+      this.props.dispatch({ type: 'FETCH_NEW_CLOTHING' });
     }
 
     getOutfit = () => {
@@ -268,38 +269,18 @@ class Story extends Component {
       });
     }
 
-    printNewClothing = ( userInput ) => {
+    printNewClothing = () => {
 
-      // AUDRY - HACK
-      // get new piece from DB
-      // check if in closet already
-      // maybe SQL = select * WHERE clothing_id NOT IN (user closet item IDs: 1, 3, 4, 6, 12)
+      let n = this.props.reduxState.newClothing;
+      let newFindText = `wow you found this new clothing \n`
+      newFindText += `${ n.icon } #${ n.id }: ${ n.color } . ${ n.fit } . ${ n.featureA } . ${ n.featureB } length \n`;
+      newFindText += `You want to keep it?\n(y/n)\n`;
+      let newFindPrompt = <div key={ this.getNewKey() }>{ newFindText }</div>;
 
-
-
-
-
-
-
-
-      // let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
-
-      // const allClothes = this.props.reduxState.allClothes;
-      // const choices = allClothes.filter( cloth => !cloth.wearing );
-
-      // let donatableClothes = `What would you like to donate: \n`;
-      // for ( let i of choices ) {
-      //   donatableClothes += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
-      // }
-      // donatableClothes += '\n';
-
-      // let youChooseDiv = <div key={ this.getNewKey() }>{ donatableClothes }</div>;
-      // let prompt = <div key={ this.getNewKey() }>Enter your choice #: </div>;
-
-      // // store/show everything that's happened
-      // this.setState({
-      //   whatsHappening: [ ...this.state.whatsHappening, newUserInputDiv, youChooseDiv, prompt ]
-      // });
+      // store/show everything that's happened
+      this.setState({
+        whatsHappening: [ ...this.state.whatsHappening, newFindPrompt ]
+      });
     }
 
     printOutfit = ( userInput ) => {
