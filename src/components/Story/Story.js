@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import  '../Story/Story.css';
+import SmallLogo from '../SmallLogo/SmallLogo';
 
 class Story extends Component {
   
@@ -337,12 +338,15 @@ class Story extends Component {
   
     render() {    
         return (
+          <>
+            <SmallLogo />
             <div className="storyBox">
               {/* all we are doing is printing the entire array each change */}
               { 
                 this.state.whatsHappening.map( div => div )
               }
             </div>
+          </>
         );
     }
 }

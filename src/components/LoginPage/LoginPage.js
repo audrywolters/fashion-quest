@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FQBigLogo from '../FQBigLogo/FQBigLogo';
+import BigLogo from '../BigLogo/BigLogo';
+import '../LoginPage/LoginPage.css';
 
 class LoginPage extends Component {
   state = {
@@ -41,12 +42,13 @@ class LoginPage extends Component {
             {this.props.errors.loginMessage}
           </h2>
         )}
+        <BigLogo />
         <form onSubmit={this.login}>
-          <FQBigLogo />
           <div>
             <label htmlFor="username">
-              Username:
+              username:
               <input
+                className="loginInput"
                 type="text"
                 name="username"
                 value={this.state.username}
@@ -56,8 +58,9 @@ class LoginPage extends Component {
           </div>
           <div>
             <label htmlFor="password">
-              Password:
+              password:
               <input
+                className="loginInput"
                 type="password"
                 name="password"
                 value={this.state.password}

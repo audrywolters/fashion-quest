@@ -1,7 +1,7 @@
 const allClothesReducer = ( state = [], action ) => {
     switch ( action.type ) {
-        case 'SET_ALL_CLOTHES':
-            return action.payload
+        // case 'SET_ALL_CLOTHES':
+        //     return action.payload
         default:
             return state;
     }
