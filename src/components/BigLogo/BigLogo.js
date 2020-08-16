@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../BigLogo/BigLogo.css';
 
 class BigLogo extends Component {
     

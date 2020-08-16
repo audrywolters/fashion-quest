@@ -1,4 +1,7 @@
+
 .bigLogo {
     font-family: 'Oslo II Regular', monospace;
-    font-size: 20px;
+    font-size: 15px;
+    white-space: pre;
+    padding: 20px;
 }
