@@ -42,50 +42,46 @@ class LoginPage extends Component {
             {this.props.errors.loginMessage}
           </h2>
         )}
-        <BigLogo />
         <form onSubmit={this.login}>
-          <div>
-            <label htmlFor="username">
-              username:
-              <input
-                className="loginInput"
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              password:
-              <input
-                className="loginInput"
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
+          <BigLogo />
+            <div class="username">
+              <label htmlFor="username">
+                username:
+                <input
+                  className=""
+                  type="text"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleInputChangeFor('username')}
+                />
+              </label>
+            </div>
+            <div class="password">
+              <label htmlFor="password">
+                password:
+                <input
+                  className=""
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleInputChangeFor('password')}
+                />
+              </label>
+            </div>
             <input
-              className="log-in"
+              className="login systemUser"
               type="submit"
               name="submit"
-              value="Log In"
+              value="log in"
             />
-          </div>
         </form>
-        {/* <center>
           <button
             type="button"
-            className="link-button"
+            className="register systemUser"
             onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
           >
-            Register
+            register
           </button>
-        </center> */}
       </div>
     );
   }

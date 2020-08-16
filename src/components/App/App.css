@@ -2,12 +2,5 @@ body {
     margin: 0px;
     background-color: rgb(53, 53, 53);
     color: rgb(102, 143, 127);
-}
-
-form {
-    width: 30%;
-    height: 50px;
-    margin: 20px auto;
-    padding: 25px;
-    border-radius: 2px;
+    font-family: 'Avenir' sans-serif;
 }

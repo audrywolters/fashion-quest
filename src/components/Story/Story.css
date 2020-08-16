@@ -1,11 +1,12 @@
 .storyBox {
     border: solid 2px rgb(90, 90, 90);
     width: 75%;
-    height: 500px;
+    height: 425px;
     padding: 10px;
     overflow: auto;
     color: rgb(102, 143, 127);
     font: 1em 'Avenir';
+    margin: auto;
 }
 
 div {
@@ -13,7 +14,7 @@ div {
 }
 
 .userInput {
-    font-weight: bold;
+    /* font-weight: bold; */
     font-style: italic;
     text-align: right;
 }

@@ -1,8 +1,6 @@
 .smallLogo {
     font-family: 'Oslo II Regular', monospace;
     font-size: 8px;
-    white-space: pre;
-    margin: auto;
-    width: 42%;
-    padding: 20px;
+    margin-left: 460px;
+    padding: 10px 0 15px 0;
 }
