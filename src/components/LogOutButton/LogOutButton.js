@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import '../LogOutButton/LogOutButton.css';
 
 const LogOutButton = props => (
-  <button className="link-button"
+  <button className="systemUser logOutButton"
           onClick={ () => props.dispatch( { type: 'LOGOUT' } ) }
   >
     Log Out

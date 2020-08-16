@@ -40,9 +40,9 @@ button:focus {
     font-size: 13px;
     padding: 8px;
     width: 85px;
-    border: 1px solid rgb(102, 143, 127);
+    border: 1px solid rgb(92, 122, 111);
     background-color: rgb(53, 53, 53);
-    color: rgb(102, 143, 127);
+    color: rgb(92, 122, 111);
     margin-top: 10px;
 }
 
