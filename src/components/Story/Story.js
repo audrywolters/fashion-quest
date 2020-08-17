@@ -24,6 +24,8 @@ class Story extends Component {
       this.getOutfit();
       this.getCloset();
       this.getNewClothing();
+      
+      this.printIntro();
     }
     
     componentDidUpdate( prevProps ) {
@@ -65,7 +67,7 @@ class Story extends Component {
             })
             this.printDonate( userInput );
             break;
-          case 'k': // story time!
+          case 'ok': // story time!
             this.printSenario( userInput );
             break;
           case 'outfit': // look at the outfit
@@ -82,11 +84,6 @@ class Story extends Component {
     }
 
     //#region GET
-    // getAllClothes = () => {
-    //   // saga, get all the clothes for this user
-    //   this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
-    // }
-
     getCloset = () => {
       // ask saga to help us do it
       this.props.dispatch({ type: 'FETCH_CLOSET' });
@@ -186,6 +183,20 @@ class Story extends Component {
     //#endregion
 
     //#region PRINT
+
+    printIntro = ( ) => {
+
+      let intro = 'Welcome to\n!!! FASHION QUEST !!!\nLet the adventure begin!\n*hint* to progress the story, type \'ok\'';
+      // yay new div w newly entered text
+      let newSenarioDiv = <div key={ this.getNewKey() }>{ intro }</div>;
+
+      // store/show everything that's happened
+      this.setState({
+        whatsHappening: [ ...this.state.whatsHappening, newSenarioDiv ],
+        whatsCount: this.state.whatsCount + 1
+      });
+    }
+    
     printChange = ( userInput ) => {
       
       let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
