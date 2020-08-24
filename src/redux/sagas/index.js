@@ -1,5 +1,4 @@
 import { all } from 'redux-saga/effects';
-import allClothesSaga from './allClothesSaga';
 import changeSaga from './changeSaga';
 import closetSaga from './closetSaga';
 import donateSaga from './donateSaga';
@@ -20,7 +19,6 @@ import userSaga from './userSaga';
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
-    allClothesSaga(),
     changeSaga(),
     closetSaga(),
     donateSaga(),

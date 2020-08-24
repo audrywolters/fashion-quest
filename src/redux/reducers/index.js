@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import allClothes from './allClothesReducer';
 import change from './changeReducer';
 import closet from './closetReducer';
 import donate from './donateReducer';
@@ -18,7 +17,6 @@ import user from './userReducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
-  allClothes,
   change,
   closet,
   donate,
