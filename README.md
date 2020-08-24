@@ -15,9 +15,12 @@ Fashion Quest
 
 ## Description
 Fashion Quest is a vintage style, tongue-in-cheek, text based adventure game.
+
 I love clothes, dresses, necklaces, etc. I find if I am comfortable and look sharp - I feel pretty good.
 Unfortunately, many people are intimidated by fashion. Things like beauty, weight, gender, and trendiness are big turn-offs - they scare people away.
+
 So I created a game that removes all those things. No impossibly gorgeous models, no gender biases, no trendiness. 
+
 Anyone can play Fashion Quest because the rules of dressing are the same across the board! Wear clothes that fit your unique body and express your unique style.
 
 ## I Learned
@@ -32,8 +35,10 @@ Thank you and enjoy!
 
 ## Next Steps
 I have big dreams for this application. I would like to add Dungeons and Dragons style statistics such as FP (fashion points), CP (confidence points), random encounter battles, and a very big piece:
+
 How to put an outfit together. I learned many things from TV's "What Not to Wear" and "Queer Eye".
 The player would lose FP if *everything* they were wearing was tight or shiny, etc.
+
 I would also like to publish this online for anyone to play. Keep an eye out!
 
 ## Fashion Educational Resources :D
