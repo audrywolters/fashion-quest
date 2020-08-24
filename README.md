@@ -19,7 +19,7 @@ Fashion Quest is a vintage style, tongue-in-cheek, text based adventure game.
 I love clothes, dresses, necklaces, etc. I find if I am comfortable and look sharp - I feel pretty good.
 Unfortunately, many people are intimidated by fashion. Things like beauty, weight, gender, and trendiness are big turn-offs - they scare people away.
 
-So I created a game that removes all those things. Because it is all text, no photos, there are no impossibly gorgeous models, no gender biases, no trendiness. 
+So I created a game that removes all those things. Because it is all text w/ no photos, there are no impossibly gorgeous models, no gender biases, no trendiness. 
 
 Anyone can play Fashion Quest because the rules of dressing are the same across the board! Wear clothes that fit your unique body and express your unique style.
 
