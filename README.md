@@ -1,9 +1,11 @@
 
-# Project Name
+## Project Name
 Fashion Quest
 
 ## Languages Used
+HTML
 CSS
+Javascript
 React
 React-Router
 Axios
@@ -12,19 +14,28 @@ Redux Sagas
 Postgres SQL
 
 ## Description
-This web app displays serveral movies with their title and descriptions.
-The user can click on a poster and they will be brought to a page that diplays data about the film.
-There is an option of clicking an Edit button that allows the user to change the Title and/or the Description.
+Fashion Quest is a vintage style, tounge-in-cheek, text based adventure game.
+I love clothes, dresses, necklaces, etc. I find if I am comfortable and look sharp - I feel pretty good.
+Unfortunatley, many people are intimidated by fashion. Things like beatuy, weight, gender, and trendiness are big turn-offs - they scare people away.
+So I created a game that removes all those things. No impossibly gourgeous models, no gender biases, no trendiness. 
+Anyone can play Fashion Quest because the rules of dressing are the same across the board! Wear clothes that fit your uniuqe body and express your unique style.
 
 ## I Learned
-How to combine almost everything I've learned at Prime! Very challenging assignment.
-This one had no clear path for building it. It was up to us to be creative and go our own way.
+Building this was a 2 week adventure in itself! 
 
-The most challenging part was deciding how I was to retrieve data, imagining the app had 100,000 movies.
-One option would to hit the server on every Poster click and get that movies data.
-But that would be a lot of server traffic.
+I struggled with basic input and output! I developed some imposter syndrome until I asked my instructor for help. She said I was trying to build a 1980s C++ game in React - which is not made for this sort of thing! :D
+So, I am proud of my anti-establishment, "avant gaurde" :P, expoloration into React.
+I even though I molded React into a form of my own, I gained a deeper knowledge of the language.
 
-I ended up hitting the server once at the beginning and pulling all the data there into Redux.
-The con there is looping over a lot of data.
-There was no perfect solution so I opted for the client to handle the heavy stuff.
+While it was very hard work, it was still a joy.
+Thank you and enjoy!
 
+## Next Steps
+I have big dreams for this application. I would like to add Dungeons and Dragons style statistics such as FP (fashion points), CP (confidence points), random encouter battles, and a very big piece:
+How to put an outfit together. I learned many things from TV's "What Not to Wear" and "Queer Eye".
+The player would lose FP if *everything* they were wearing was tight or shiny, etc.
+I would also like to publish this online for anyone to play. Keep an eye out!
+
+## Fasion Educational Resources :D
+https://www.tlc.com/tv-shows/what-not-to-wear/
+https://www.facebook.com/QueerEyeNetflix/
