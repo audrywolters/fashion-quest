@@ -1,3 +1,4 @@
+
 # Project Name
 Fashion Quest
 
@@ -26,3 +27,4 @@ But that would be a lot of server traffic.
 I ended up hitting the server once at the beginning and pulling all the data there into Redux.
 The con there is looping over a lot of data.
 There was no perfect solution so I opted for the client to handle the heavy stuff.
+
