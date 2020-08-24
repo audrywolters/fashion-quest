@@ -14,7 +14,8 @@ div {
 }
 
 .userInput {
-    /* font-weight: bold; */
+    font: 1em 'Avenir';
+    font-weight: bold;
     font-style: italic;
     text-align: right;
 }

@@ -10,7 +10,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
                         FROM clothing_item as i
                         JOIN closet as c on c.clothing_item = i.id
                         JOIN "user" as u on u.closet = c.closet_id
-       df                 WHERE u.id = $1
+                        WHERE u.id = $1
                         ORDER BY i.id; `
 
     pool.query( queryText, [ req.user.id ] )
