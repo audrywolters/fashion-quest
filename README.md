@@ -42,5 +42,7 @@ The player would lose FP if *everything* they were wearing was tight or shiny, e
 I would also like to publish this online for anyone to play. Keep an eye out!
 
 ## Fashion Educational Resources :D
+
 https://www.tlc.com/tv-shows/what-not-to-wear/
+
 https://www.facebook.com/QueerEyeNetflix/
