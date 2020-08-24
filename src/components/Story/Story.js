@@ -201,12 +201,14 @@ class Story extends Component {
       const wearing = this.props.reduxState.outfit;
       const choices = this.props.reduxState.closet;
 
+      // AUDRY - make a DRY method - resuse code
       let youWear = `You are wearing: \n`;
       for ( let i of wearing ) {
         youWear += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
       youWear += '\n';
 
+      // AUDRY - make a DRY method - resuse code
       let changeTo = `You can change into: \n`;
       for ( let i of choices ) {
         changeTo += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
@@ -228,8 +230,9 @@ class Story extends Component {
 
       // yay new div w newly entered text
       let closet = this.props.reduxState.closet;
-      let display = '';
 
+      // AUDRY - make a DRY method - resuse code
+      let display = '';
       for ( let i of closet ) {
         display += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
@@ -248,6 +251,7 @@ class Story extends Component {
 
       const choices = this.props.reduxState.closet;
 
+      // AUDRY - make a DRY method - resuse code
       let donatableClothes = `What would you like to donate: \n`;
       for ( let i of choices ) {
         donatableClothes += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
@@ -266,9 +270,12 @@ class Story extends Component {
     printNewClothing = () => {
 
       let i = this.props.reduxState.newClothing;
+
+      // AUDRY - make a DRY method - resuse code
       let foundNewItem = `\nHey you found clothes in a garbage can!\n`
       foundNewItem += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`;
-      foundNewItem += `Cool let\'s keep it.`;
+      foundNewItem += `Cool let's keep it.`;
+
       let foundNewItemDiv = <div key={ this.getNewKey() }>{ foundNewItem }</div>;
 
       // store/show everything that's happened

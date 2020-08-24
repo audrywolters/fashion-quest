@@ -6,8 +6,6 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 // get all clothes per user
 router.post('/', rejectUnauthenticated, (req, res) => {
 
-    console.log('in delete');
-
     const removeID   = req.body.removeID;
 
     const queryText = ` DELETE FROM closet

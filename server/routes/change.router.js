@@ -6,8 +6,6 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 // what's in the user's closet
 router.put('/', rejectUnauthenticated, async (req, res) => {
 
-    console.log(`req.body`, req.body);
-
     // Get a single connection from the pool to do the transaction
     // THIS IS IMPORTANT - won't work if you don't use the same connection!
     const connection = await pool.connect();
