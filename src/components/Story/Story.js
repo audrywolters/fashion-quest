@@ -13,10 +13,6 @@ class Story extends Component {
     }
 
     componentDidMount() {
-
-      // AUDRY - to load a story item right away:
-      // get story senario from userID = storyState (will equal senairo 5 or whatevs)
-
       // one shot get all story senarios - these won't change
       this.props.dispatch({ type: 'FETCH_SENARIO' });
 
@@ -24,6 +20,8 @@ class Story extends Component {
       this.getOutfit();
       this.getCloset();
       this.getNewClothing();
+      
+      this.printIntro();
     }
     
     componentDidUpdate( prevProps ) {
@@ -65,7 +63,7 @@ class Story extends Component {
             })
             this.printDonate( userInput );
             break;
-          case 'k': // story time!
+          case 'ok': // story time!
             this.printSenario( userInput );
             break;
           case 'outfit': // look at the outfit
@@ -76,17 +74,14 @@ class Story extends Component {
             // ?
         }
 
+        this.updateScroll();
+
         // clear so input will be checked even if it is the same thing typed
         this.props.dispatch({ type: 'UNSET_INPUT', payload: '' });      
       }
     }
 
     //#region GET
-    // getAllClothes = () => {
-    //   // saga, get all the clothes for this user
-    //   this.props.dispatch({ type: 'FETCH_ALL_CLOTHES' });
-    // }
-
     getCloset = () => {
       // ask saga to help us do it
       this.props.dispatch({ type: 'FETCH_CLOSET' });
@@ -186,6 +181,19 @@ class Story extends Component {
     //#endregion
 
     //#region PRINT
+    printIntro = ( ) => {
+
+      let intro = 'Welcome to\n!!! FASHION QUEST !!!\nLet the adventure begin!\n*hint* to progress the story, type \'ok\'';
+      // yay new div w newly entered text
+      let newSenarioDiv = <div key={ this.getNewKey() }>{ intro }</div>;
+
+      // store/show everything that's happened
+      this.setState({
+        whatsHappening: [ ...this.state.whatsHappening, newSenarioDiv ],
+        whatsCount: this.state.whatsCount + 1
+      });
+    }
+    
     printChange = ( userInput ) => {
       
       let newUserInputDiv = <div key={ this.getNewKey() } className="userInput">{ userInput }</div>;
@@ -195,13 +203,13 @@ class Story extends Component {
 
       let youWear = `You are wearing: \n`;
       for ( let i of wearing ) {
-        youWear += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+        youWear += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
       youWear += '\n';
 
       let changeTo = `You can change into: \n`;
       for ( let i of choices ) {
-        changeTo += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+        changeTo += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
       changeTo += '\n';
 
@@ -223,7 +231,7 @@ class Story extends Component {
       let display = '';
 
       for ( let i of closet ) {
-        display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+        display += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
 
       let newClosetDiv = <div key={ this.getNewKey() }>{ display }</div>;
@@ -242,7 +250,7 @@ class Story extends Component {
 
       let donatableClothes = `What would you like to donate: \n`;
       for ( let i of choices ) {
-        donatableClothes += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+        donatableClothes += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
       donatableClothes += '\n';
 
@@ -257,9 +265,9 @@ class Story extends Component {
 
     printNewClothing = () => {
 
-      let n = this.props.reduxState.newClothing;
+      let i = this.props.reduxState.newClothing;
       let foundNewItem = `\nHey you found clothes in a garbage can!\n`
-      foundNewItem += `${ n.icon } #${ n.id }: ${ n.color } . ${ n.fit } . ${ n.featureA } . ${ n.featureB } length \n`;
+      foundNewItem += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`;
       foundNewItem += `Cool let\'s keep it.`;
       let foundNewItemDiv = <div key={ this.getNewKey() }>{ foundNewItem }</div>;
 
@@ -268,7 +276,7 @@ class Story extends Component {
         whatsHappening: [ ...this.state.whatsHappening, foundNewItemDiv ]
       });
 
-      this.setNewClothing(n.id);
+      this.setNewClothing(i.id);
     }
 
     printOutfit = ( userInput ) => {
@@ -279,7 +287,7 @@ class Story extends Component {
       let display = '';
 
       for ( let i of outfit ) {
-        display += `${ i.icon } #${ i.id }: ${ i.color } . ${ i.fit } . ${ i.featureA } . ${ i.featureB } length \n`
+        display += `${ i.icon } #${ i.id }: ${ i.fit } | ${ i.color } | ${ i.featureA } | ${ i.featureB }\n`
       }
 
       let newOutfitDiv = <div key={ this.getNewKey() }>{ display }</div>;
@@ -334,13 +342,18 @@ class Story extends Component {
     getNewKey = () => {
       return Math.random().toString(36).substr( 2, 20 );
     }
+
+    updateScroll = () => {
+      var element = document.getElementById("this");
+      element.scrollTop = element.scrollHeight;
+  }
     //#endregion
   
     render() {    
         return (
           <>
             <SmallLogo />
-            <div className="storyBox">
+            <div id="this" className="storyBox">
               {/* all we are doing is printing the entire array each change */}
               { 
                 this.state.whatsHappening.map( div => div )
